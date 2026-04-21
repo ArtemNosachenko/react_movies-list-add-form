@@ -20,16 +20,23 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [count, setCount] = useState(0);
 
   const isFormValid = Boolean(
-    title.trim() &&
-    imgUrl.trim() &&
-    imdbUrl.trim() &&
-    imdbId.trim()
+    title.trim() && imgUrl.trim() && imdbUrl.trim() && imdbId.trim(),
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const resetForm = () => {
+    setTitle('');
+    setDescription('');
+    setImgUrl('');
+    setImdbUrl('');
+    setImdbId('');
+  };
 
-    if (!isFormValid) return;
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!isFormValid) {
+      return;
+    }
 
     onAdd({
       title,
@@ -39,11 +46,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       imdbId,
     });
 
-    setTitle('');
-    setDescription('');
-    setImgUrl('');
-    setImdbUrl('');
-    setImdbId('');
+    resetForm();
 
     setCount(prev => prev + 1);
   };
